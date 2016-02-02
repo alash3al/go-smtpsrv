@@ -3,7 +3,7 @@ A Go SMTP Server
 
 Introduction
 ---
-I wanted a way to bring email as a first class citezen in go. I modeled the api much like the 
+I wanted a way to bring email as a first class citizen in go. I modeled the api much like the 
 http package. There were a few translation errors that I'm still trying to work out, things 
 that are harder due to the fact that smtp is a stateful protocol. I'd welcome feedback on this.
 
@@ -16,7 +16,7 @@ handlers. A simple server would register an 'all' handler, and then listen on th
 	import "github.com/murphysean/smtp"
 
 	smtp.HandleFunc("*@*", func(envelope *smtp.Envelope) error {
-		fmt.Println("Message Recieved", envelope.MessageTo)
+		fmt.Println("Message Received", envelope.MessageTo)
 		fmt.Println("From:", envelope.MessageFrom, envelope.RemoteAddr)
 		fmt.Println("To:", envelope.MessageTo)
 		fn := "emails/" + time.Now().Format(time.RFC3339) + ".eml"
@@ -59,7 +59,7 @@ You can also further customize the tls config as well.
 	server.TLSConfig = config
 	log.Fatal(server.ListenAndServeTLS(":smtp", "cert.pem", "key.pem", nil))
 
-#### Naming and Debuging
+#### Naming and Debugging
 
 As shown in the previous snippet you can also give your server a name (default = localhost). 
 Naming lends credibility to your server, that some clients seem to require.
