@@ -32,15 +32,15 @@ Now all incoming messages will be logged and saved to the emails directory.
 The Handler pattern has two parts, the local and the domain. The matching algorithm:
 
 1. Start with the domain
- 1. If there is a match
-  1. Move to step 2
- 1. If there is not a match
-  1. Start at step 1 with domain = "*"
+  1. If there is a match
+    1. Move to step 2
+  1. If there is not a match
+    1. Start at step 1 with domain = "*"
 1. Check the local portion
- 1. If there is a match
-  1. Move to step 3
- 1. If there is not a match
-  1. Retry step 2 with local = "*"
+  1. If there is a match
+    1. Move to step 3
+  1. If there is not a match
+    1. Retry step 2 with local = "*"
 1. Call the registered handler
 
 If there is no registered handler the server will return an error to the client and disregard
