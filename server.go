@@ -248,7 +248,9 @@ func (c *conn) readCommand() error {
 				return err
 			}
 		}
-		if c.server.Auth != nil {
+		if ((c.server.TLSConfig != nil && c.tlsState != nil) ||
+			c.server.TLSConfig == nil) &&
+			c.server.Auth != nil {
 			c.server.logfd("<%d-%s\n", 250, "AUTH PLAIN")
 			err = c.text.PrintfLine("%d-%s", 250, "AUTH PLAIN")
 			if err != nil {
