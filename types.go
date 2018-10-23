@@ -1,4 +1,4 @@
-package mailbox
+package smtpsrv
 
 // Handler is a 'net/http' like handler but for mails
 type Handler func(req *Request) error

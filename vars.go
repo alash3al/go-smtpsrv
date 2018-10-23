@@ -1,4 +1,4 @@
-package mailbox
+package smtpsrv
 
 import (
 	"errors"
