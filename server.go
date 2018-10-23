@@ -6,6 +6,12 @@ import (
 	"time"
 )
 
+// Handler is a 'net/http' like handler but for mails
+type Handler func(req *Request) error
+
+// Processor is a SMTP command processor
+type Processor func(req *Request) error
+
 // Server is our main server handler
 type Server struct {
 	// The name of the server used while greeting
@@ -60,7 +66,7 @@ func (srv *Server) ListenAndServe() error {
 func (srv *Server) ListenAndServeTLS(certFile string, keyFile string) error {
 	config := &tls.Config{}
 	if srv.TLSConfig != nil {
-		*config = *srv.TLSConfig
+		config = srv.TLSConfig
 	}
 	var err error
 	config.Certificates = make([]tls.Certificate, 1)

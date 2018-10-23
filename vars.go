@@ -17,7 +17,7 @@ var (
 )
 
 var (
-	// Default processor functions
+	// DefaultProcessors holds processor functions
 	DefaultProcessors = map[string]Processor{
 		"EHLO":     ehloProcessor,
 		"HELO":     ehloProcessor,

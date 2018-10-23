@@ -6,34 +6,53 @@ import (
 	"net/mail"
 	"net/textproto"
 	"strings"
-	"sync"
 
 	"github.com/zaccone/spf"
 )
 
 // Request is the incoming connection meta-data
 type Request struct {
-	Server    *Server
-	Conn      net.Conn
-	TextProto *textproto.Conn
-	TLSState  *tls.ConnectionState
+	// the currently running server
+	Server *Server
 
+	// the underlying socket for currently connected client
+	Conn net.Conn
+
+	// an instance of go stdlib for handling the above Conn as a text-porotocol
+	TextProto *textproto.Conn
+
+	// TLS related info
+	TLSState *tls.ConnectionState
+
+	// a shortcut for Conn.RemoteAddr()
 	RemoteAddr string
 
-	HelloHost     string
+	// contains the hostname of the currently connected client during the EHLO/HELO command
+	HelloHost string
+
+	// whether EHLO/HELO called or not
 	HelloRecieved bool
 
+	// the login username used for login, empty means that this is an anonymous attempt
 	AuthUser string
-	From     string
-	To       []string
-	Message  *mail.Message
 
-	QuitSent  bool
+	// the user that sends the mail
+	From string
+
+	// the rctps!
+	To []string
+
+	// the body of the mail "DATA command" but parsed
+	Message *mail.Message
+
+	// whether the client called QUIT or not
+	QuitSent bool
+
+	// the spf checking result
 	SPFResult spf.Result
 
+	// the currently processing line
 	Line []string
-
-	mu sync.Mutex
 }
 
 // NewRequest creates a new instance of the Request struct
