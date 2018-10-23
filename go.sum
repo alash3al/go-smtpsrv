@@ -1,0 +1,16 @@
+github.com/miekg/dns v1.0.14 h1:9jZdLNd/P4+SfEJ0TNyxYpsK8N4GtfylBLqtbYN1sbA=
+github.com/miekg/dns v1.0.14/go.mod h1:W1PPwlIAgtquWBMBEV9nkV9Cazfe8ScdGz/Lj7v3Nrg=
+github.com/tdewolff/parse v2.3.3+incompatible h1:q6OSjvHtvBucLb34z24OH1xl5wGdw1mI9Vd38Qj9evs=
+github.com/tdewolff/parse v2.3.3+incompatible/go.mod h1:8oBwCsVmUkgHO8M5iCzSIDtpzXOT0WXX9cWhz+bIzJQ=
+github.com/tdewolff/test v0.0.0-20171106182207-265427085153 h1:B1Z2txQ2QI9nsWELeEvGBAdNhMylGMSCCypjsLJh/Mw=
+github.com/tdewolff/test v0.0.0-20171106182207-265427085153/go.mod h1:DiQUlutnqlEvdvhSn2LPGy4TFwRauAaYDsL+683RNX4=
+github.com/zaccone/spf v0.0.0-20170817004109-76747b8658d9 h1:NugUf62Z6Yzn//u/MT+cuaFX1AFzfuIR9QVywUQX18E=
+github.com/zaccone/spf v0.0.0-20170817004109-76747b8658d9/go.mod h1:AL91TJsHKIaWR16S1IaxTSZfBRMr3/dOdiN1OZ1m9RM=
+golang.org/x/crypto v0.0.0-20181015023909-0c41d7ab0a0e h1:IzypfodbhbnViNUO/MEh0FzCUooG97cIGfdggUrUSyU=
+golang.org/x/crypto v0.0.0-20181015023909-0c41d7ab0a0e/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
+golang.org/x/net v0.0.0-20181017193950-04a2e542c03f h1:4pRM7zYwpBjCnfA1jRmhItLxYJkaEnsmuAcRtA347DA=
+golang.org/x/net v0.0.0-20181017193950-04a2e542c03f/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
+golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f h1:wMNYb4v58l5UBM7MYRLPG6ZhfOqbKu7X5eyFl8ZhKvA=
+golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sys v0.0.0-20181022134430-8a28ead16f52 h1:iuRaATs1WHBt1WKav1CczVukq8i0T8geqpAMCUAnT+o=
+golang.org/x/sys v0.0.0-20181022134430-8a28ead16f52/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
