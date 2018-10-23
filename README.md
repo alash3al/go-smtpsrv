@@ -1,53 +1,41 @@
-A Go SMTP Server
-===
+A SMTP Server Package [![](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=flat-square)](https://godoc.org/github.com/alash3al/go-smtpsrv)
+=============================
+a simple smtp server library, forked from [This repo](http://github.com/murphysean/smtp) but I refactored it to be more advanced and organized
 
-Introduction
----
-I wanted a way to bring email as a first class citizen in go. I modeled the api much like the 
-http package. There were a few translation errors that I'm still trying to work out, things 
-that are harder due to the fact that smtp is a stateful protocol. I'd welcome feedback on this.
+Features
+=========
+- Very simple
+- Automated SPF Checks
+- Supports TLS
+- Modular, as you can add more smtp command processors to extend the functionality as you need
 
-A Very simple server
----
+Quick Start
+===========
+> `go get github.com/alash3al/go-smtpsrv`
 
-The smtp package works by offering a muxer that will route incoming email to registered 
-handlers. A simple server would register an 'all' handler, and then listen on the smtp port.
+```go
+package main
 
-	import "github.com/murphysean/smtp"
+import (
+	"fmt"
 
-	smtp.HandleFunc("*@*", func(envelope *smtp.Envelope) error {
-		fmt.Println("Message Received", envelope.MessageTo)
-		fmt.Println("From:", envelope.MessageFrom, envelope.RemoteAddr)
-		fmt.Println("To:", envelope.MessageTo)
-		fn := "emails/" + time.Now().Format(time.RFC3339) + ".eml"
-		ioutil.WriteFile(fn, b, os.ModePerm)
-		fmt.Println("Wrote to " + fn)
+	"github.com/alash3al/go-smtpsrv"
+)
+
+func main() {
+	handler := func(req *smtpsrv.Request) error {
+		// ...
 		return nil
 	}
+	srv := &smtpsrv.Server{
+		Addr:        ":25025",
+		MaxBodySize: 5 * 1024,
+		Handler:     handler,
+	}
+	fmt.Println(srv.ListenAndServe())
+}
 
-	log.Fatal(smtp.ListenAndServe(":smtp", nil))
-
-Now all incoming messages will be logged and saved to the emails directory.
-
-The Handler pattern has two parts, the local and the domain. The matching algorithm:
-
-1. Start with the domain
-  1. If there is a match
-    1. Move to step 2
-  1. If there is not a match
-    1. Start at step 1 with domain = "*"
-1. Check the local portion
-  1. If there is a match
-    1. Move to step 3
-  1. If there is not a match
-    1. Retry step 2 with local = "*"
-1. Call the registered handler
-
-If there is no registered handler the server will return an error to the client and disregard
-the email.
-
-Additional Options
----
+```
 
 #### Security
 
@@ -58,14 +46,6 @@ You can also further customize the tls config as well.
 	config := &tls.Config{MinVersion:tls.VersionSSL30}
 	server.TLSConfig = config
 	log.Fatal(server.ListenAndServeTLS(":smtp", "cert.pem", "key.pem", nil))
-
-#### Naming and Debugging
-
-As shown in the previous snippet you can also give your server a name (default = localhost). 
-Naming lends credibility to your server, that some clients seem to require.
-
-Debugging is pretty verbose and dumps the entire protocol out to stderr. It is really handy 
-for troubleshooting particularly annoying clients.
 
 #### Authentication
 
