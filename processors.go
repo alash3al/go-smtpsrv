@@ -118,6 +118,9 @@ func authProcessor(req *Request) error {
 }
 
 func mailProcessor(req *Request) error {
+	if req.Server.Auth != nil && req.AuthUser == "" {
+		return req.TextProto.PrintfLine("%d %s", 503, "Authentication needed")
+	}
 	if req.From != "" {
 		return req.TextProto.PrintfLine("%d %s", 503, "MAIL command already recieved")
 	}
