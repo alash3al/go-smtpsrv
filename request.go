@@ -2,8 +2,8 @@ package smtpsrv
 
 import (
 	"crypto/tls"
+	"io"
 	"net"
-	"net/mail"
 	"net/textproto"
 	"strings"
 
@@ -42,8 +42,8 @@ type Request struct {
 	// the rctps!
 	To []string
 
-	// the body of the mail "DATA command" but parsed
-	Message *mail.Message
+	// the raw DATA section
+	Message io.Reader
 
 	// whether the client called QUIT or not
 	QuitSent bool

@@ -5,7 +5,6 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"net"
-	"net/mail"
 	"net/textproto"
 	"strings"
 
@@ -174,18 +173,7 @@ func dataProcessor(req *Request) error {
 		return err
 	}
 
-	req.Message, err = mail.ReadMessage(LimitDataSize(req.TextProto.DotReader(), req.Server.MaxBodySize))
-	if err != nil {
-		return req.TextProto.PrintfLine("%d error parsing the DATA, it may exceeded the max size of %d bytes", 503, req.Server.MaxBodySize)
-	}
-
-	// if req.Server.MaxBodySize > 0 {
-	// 	req.Message.Body = io.MultiReader(
-	// 		io.LimitReader(req.Message.Body, req.Server.MaxBodySize),
-	// 		buffer.NewReader([]byte("\r\n.\r\n")),
-	// 	)
-	// }
-	// req.Message.Body = LimitDataSize()
+	req.Message = LimitDataSize(req.TextProto.DotReader(), req.Server.MaxBodySize)
 
 	err = req.Server.Handler(req)
 	if err != nil {
