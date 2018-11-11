@@ -29,6 +29,7 @@ func main() {
 		return nil
 	}
 	srv := &smtpsrv.Server{
+		Name: "mail.my.server",
 		Addr:        ":25025",
 		MaxBodySize: 5 * 1024,
 		Handler:     handler,
