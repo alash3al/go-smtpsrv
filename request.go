@@ -112,6 +112,8 @@ func (req *Request) Process() error {
 		req.Server.Processors = DefaultProcessors
 	}
 
+	req.Line[0] = strings.ToUpper(req.Line[0])
+
 	processor, found := req.Server.Processors[req.Line[0]]
 	if !found {
 		return req.TextProto.PrintfLine("%d %s (%s)", 500, "Command not recognized", req.Line[0])
