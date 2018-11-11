@@ -8,7 +8,6 @@ import (
 	"net/textproto"
 	"strings"
 
-	"github.com/smancke/mailck"
 	"github.com/zaccone/spf"
 )
 
@@ -135,16 +134,19 @@ func mailProcessor(req *Request) error {
 		return req.TextProto.PrintfLine("%d %s", 501, "MAIL command contained invalid address")
 	}
 
+	// extraxt the from email address
 	from := emailRegExp.FindStringSubmatch(req.Line[1][i+1:])[1]
+	fromParts := strings.SplitN(from, "@", 2)
+
 	req.From = from
 	ip, _, _ := net.SplitHostPort(req.RemoteAddr)
 
 	// check the spf result
-	req.SPFResult, _, _ = spf.CheckHost(net.ParseIP(ip), strings.Split(from, "@")[0], from)
+	req.SPFResult, _, _ = spf.CheckHost(net.ParseIP(ip), fromParts[0], from)
 
-	// check the format, host and user
-	chkres, err := mailck.Check(from, from)
-	req.MailValidation = (err == nil) && chkres.IsValid()
+	// check the mx records of the from hostname
+	mxs, err := net.LookupMX(fromParts[1])
+	req.Mailable = (err == nil) && len(mxs) > 0
 
 	return req.TextProto.PrintfLine("%d %s", 250, "Ok")
 }
