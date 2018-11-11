@@ -51,6 +51,9 @@ type Request struct {
 	// the spf checking result
 	SPFResult spf.Result
 
+	// whether the FROM mail is valid or not
+	MailValidation bool
+
 	// the currently processing line
 	Line []string
 }

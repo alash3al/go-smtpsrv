@@ -8,6 +8,8 @@ import (
 	"net/textproto"
 	"strings"
 
+	"github.com/badoux/checkmail"
+
 	"github.com/zaccone/spf"
 )
 
@@ -137,6 +139,7 @@ func mailProcessor(req *Request) error {
 	req.From = from
 	ip, _, _ := net.SplitHostPort(req.RemoteAddr)
 	req.SPFResult, _, _ = spf.CheckHost(net.ParseIP(ip), strings.Split(from, "@")[0], from)
+	req.MailValidation = checkmail.ValidateFormat(from) == nil && checkmail.ValidateHost(from) == nil
 	return req.TextProto.PrintfLine("%d %s", 250, "Ok")
 }
 
