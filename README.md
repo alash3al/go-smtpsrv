@@ -6,6 +6,7 @@ Features
 =========
 - Very simple
 - Automated SPF Checks
+- Automated `FROM` validation (`format`, `host`, `user exists`)
 - Supports TLS
 - Modular, as you can add more smtp command processors to extend the functionality as you need
 

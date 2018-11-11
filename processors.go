@@ -135,11 +135,17 @@ func mailProcessor(req *Request) error {
 	if i < 0 || !emailRegExp.MatchString(req.Line[1][i+1:]) {
 		return req.TextProto.PrintfLine("%d %s", 501, "MAIL command contained invalid address")
 	}
+
 	from := emailRegExp.FindStringSubmatch(req.Line[1][i+1:])[1]
 	req.From = from
 	ip, _, _ := net.SplitHostPort(req.RemoteAddr)
+
+	// check the spf result
 	req.SPFResult, _, _ = spf.CheckHost(net.ParseIP(ip), strings.Split(from, "@")[0], from)
+
+	// check the format, host and user
 	req.MailValidation = checkmail.ValidateFormat(from) == nil && checkmail.ValidateHost(from) == nil
+
 	return req.TextProto.PrintfLine("%d %s", 250, "Ok")
 }
 
