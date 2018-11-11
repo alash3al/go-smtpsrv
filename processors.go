@@ -8,8 +8,7 @@ import (
 	"net/textproto"
 	"strings"
 
-	"github.com/badoux/checkmail"
-
+	"github.com/smancke/mailck"
 	"github.com/zaccone/spf"
 )
 
@@ -144,7 +143,8 @@ func mailProcessor(req *Request) error {
 	req.SPFResult, _, _ = spf.CheckHost(net.ParseIP(ip), strings.Split(from, "@")[0], from)
 
 	// check the format, host and user
-	req.MailValidation = checkmail.ValidateFormat(from) == nil && checkmail.ValidateHost(from) == nil
+	chkres, err := mailck.Check(from, from)
+	req.MailValidation = (err == nil) && chkres.IsValid()
 
 	return req.TextProto.PrintfLine("%d %s", 250, "Ok")
 }
