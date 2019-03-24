@@ -73,6 +73,10 @@ func NewRequest(conn net.Conn, srv *Server) (req *Request, err error) {
 
 // Serve start accepting incoming connections
 func (req *Request) Serve() {
+	defer func() {
+		req.TextProto.Close()
+		req.Conn.Close()
+	}()
 	err := req.TextProto.PrintfLine("%d %s %s", 220, req.Server.Name, "ESMTP")
 	if err != nil {
 		return
@@ -84,9 +88,6 @@ func (req *Request) Serve() {
 			return
 		}
 	}
-
-	req.TextProto.Close()
-	req.Conn.Close()
 }
 
 // Reset resets to the defaults
