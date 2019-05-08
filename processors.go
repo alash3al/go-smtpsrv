@@ -142,7 +142,7 @@ func mailProcessor(req *Request) error {
 	ip, _, _ := net.SplitHostPort(req.RemoteAddr)
 
 	// check the spf result
-	req.SPFResult, _, _ = spf.CheckHost(net.ParseIP(ip), fromParts[0], from)
+	req.SPFResult, _, _ = spf.CheckHost(net.ParseIP(ip), fromParts[1], from)
 
 	// check the mx records of the from hostname
 	mxs, err := net.LookupMX(fromParts[1])
