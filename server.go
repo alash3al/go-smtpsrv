@@ -1,8 +1,11 @@
 package smtpsrv
 
 import (
+	"context"
 	"crypto/tls"
+	"errors"
 	"net"
+	"sync"
 	"time"
 )
 
@@ -44,7 +47,15 @@ type Server struct {
 
 	// Maximum size of the DATA command in bytes
 	MaxBodySize int64
+
+	activeRequestsWG sync.WaitGroup
+	serverClosed     bool
+	listeners        []net.Listener
 }
+
+// ErrServerClosed is returned by Serve, ListenAndServe and ListenAndServeTLS
+// after a call to Shutdown
+var ErrServerClosed = errors.New("smtp: Server closed")
 
 // ListenAndServe start serving the incoming data
 func (srv *Server) ListenAndServe() error {
@@ -82,10 +93,15 @@ func (srv *Server) ListenAndServeTLS(certFile string, keyFile string) error {
 // Serve start accepting the incoming connections
 func (srv *Server) Serve(l net.Listener) error {
 	defer l.Close()
+
+	srv.listeners = append(srv.listeners, l)
 	var tempDelay time.Duration
 	for {
 		rw, e := l.Accept()
 		if e != nil {
+			if srv.serverClosed {
+				return ErrServerClosed
+			}
 			if ne, ok := e.(net.Error); ok && ne.Temporary() {
 				if tempDelay == 0 {
 					tempDelay = 5 * time.Millisecond
@@ -105,6 +121,40 @@ func (srv *Server) Serve(l net.Listener) error {
 		if err != nil {
 			continue
 		}
-		go c.Serve()
+		srv.activeRequestsWG.Add(1)
+		go func() {
+			c.Serve()
+			srv.activeRequestsWG.Done()
+		}()
+	}
+}
+
+// Shutdown gracefully shutdowns the server.
+// It first closes the listeners then waits for requests to finish. If the
+// context expires before all requests have finished Shutdown will return the
+// context's error, else it returns any error returned from closing the
+// listeners.
+func (srv *Server) Shutdown(ctx context.Context) error {
+	srv.serverClosed = true
+
+	var err error
+	for _, l := range srv.listeners {
+		lerr := l.Close()
+		if lerr != nil {
+			err = lerr
+		}
+	}
+
+	waitChan := make(chan struct{})
+	go func() {
+		srv.activeRequestsWG.Wait()
+		close(waitChan)
+	}()
+
+	select {
+	case <-waitChan:
+		return err
+	case <-ctx.Done():
+		return ctx.Err()
 	}
 }
