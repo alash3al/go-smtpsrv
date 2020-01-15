@@ -36,5 +36,5 @@ var (
 )
 
 var (
-	emailRegExp = regexp.MustCompile(`^<((\S+)@(\S+))>$`)
+	emailRegExp = regexp.MustCompile(`^<((\S+)@(\S+))?>$`)
 )
