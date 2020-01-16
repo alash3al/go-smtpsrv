@@ -33,6 +33,9 @@ type Request struct {
 	// whether EHLO/HELO called or not
 	HelloRecieved bool
 
+	// whether MAIL FROM was received or not
+	MailFromReceived bool
+
 	// the login username used for login, empty means that this is an anonymous attempt
 	AuthUser string
 
@@ -93,6 +96,7 @@ func (req *Request) Serve() {
 // Reset resets to the defaults
 func (req *Request) Reset() {
 	req.From = ""
+	req.MailFromReceived = false
 	req.To = make([]string, 0)
 	req.Message = nil
 }
