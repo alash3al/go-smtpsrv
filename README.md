@@ -24,7 +24,7 @@ func main() {
 	cfg := smtpsrv.ServerConfig{
 		BannerDomain:  "mail.my.server",
 		ListenAddress: ":25025",
-		MaxBodySizeBytes: 5 * 1024,
+		MaxMessageBytes: 5 * 1024,
 		Handler:     handler,
 	}
 
