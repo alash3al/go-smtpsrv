@@ -1,6 +1,6 @@
 A SMTP Server Package [![](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=flat-square)](https://godoc.org/github.com/alash3al/go-smtpsrv)
 =============================
-a simple smtp server library, a simple wrapper for w maintained [go-smtp](github.com/emersion/go-smtp)
+a simple smtp server library, a simple wrapper for a well-maintained package called [go-smtp](github.com/emersion/go-smtp).
 
 Quick Start
 ===========
