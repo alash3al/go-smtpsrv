@@ -1,3 +1,5 @@
+github.com/alash3al/go-smtpsrv v0.0.0-20200606200409-605c4fdb0b9c h1:ykofSOfMIPXxPKuEVj+sPiApLqhPEUMET2fxRA70T3M=
+github.com/alash3al/go-smtpsrv v0.0.0-20200606200409-605c4fdb0b9c/go.mod h1:J1dFJ4ArF1miBovPaPShucY2iv+p1yZQYoJitiY2O4w=
 github.com/emersion/go-sasl v0.0.0-20200509203442-7bfe0ed36a21 h1:OJyUGMJTzHTd1XQp98QTaHernxMYzRaOasRir9hUlFQ=
 github.com/emersion/go-sasl v0.0.0-20200509203442-7bfe0ed36a21/go.mod h1:iL2twTeMvZnrg54ZoPDNfJaJaqy0xIQFuBdrLsmspwQ=
 github.com/emersion/go-smtp v0.13.0 h1:aC3Kc21TdfvXnuJXCQXuhnDXUldhc12qME/S7Y3Y94g=
