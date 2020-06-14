@@ -32,3 +32,8 @@ func main() {
 }
 
 ```
+
+Thanks
+=======
+- [parsemail](https://github.com/DusanKasan/parsemail)
+- [go-smtp](github.com/emersion/go-smtp)
