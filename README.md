@@ -23,12 +23,12 @@ func main() {
 
 	cfg := smtpsrv.ServerConfig{
 		BannerDomain:  "mail.my.server",
-		ListenAddress: ":25025",
+		ListenAddr: ":25025",
 		MaxMessageBytes: 5 * 1024,
 		Handler:     handler,
 	}
 
-	fmt.Println(smtpsrv.ListenAndServe(cfg))
+	fmt.Println(smtpsrv.ListenAndServe(&cfg))
 }
 
 ```
