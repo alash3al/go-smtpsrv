@@ -184,7 +184,7 @@ func decodeCharset(content io.Reader, contentTypeWithCharset string) (io.Reader)
 	charset := "default"
 	if strings.Contains(contentTypeWithCharset, "; charset=") {
 		split := strings.Split(contentTypeWithCharset, "; charset=")
-		charset = strings.Trim(split[1], " \"'")
+		charset = strings.Trim(split[1], " \"'\n\r")
 	}
 
 	tr := content
@@ -192,8 +192,7 @@ func decodeCharset(content io.Reader, contentTypeWithCharset string) (io.Reader)
 		switch charset {
 		case "Windows-1252":
 			tr = charmap.Windows1252.NewDecoder().Reader(content)
-		case "iso-8859-1":
-		case "ISO-8859-1":
+		case "iso-8859-1", "ISO-8859-1":
 			tr = charmap.ISO8859_1.NewDecoder().Reader(content)
 		default:
 		}
