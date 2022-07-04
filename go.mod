@@ -1,4 +1,4 @@
-module github.com/stouch/go-smtpsrv
+module github.com/alash3al/go-smtpsrv
 
 require (
 	github.com/emersion/go-smtp v0.13.0

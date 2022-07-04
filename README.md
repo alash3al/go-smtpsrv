@@ -1,10 +1,10 @@
-A SMTP Server Package [![](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=flat-square)](https://godoc.org/github.com/stouch/go-smtpsrv)
+A SMTP Server Package [![](https://img.shields.io/badge/godoc-reference-5272B4.svg?style=flat-square)](https://godoc.org/github.com/alash3al/go-smtpsrv)
 =============================
 a simple smtp server library for writing email servers like a boss.
 
 Quick Start
 ===========
-> `go get github.com/stouch/go-smtpsrv`
+> `go get github.com/alash3al/go-smtpsrv`
 
 ```go
 package main
@@ -12,7 +12,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/stouch/go-smtpsrv/v3"
+	"github.com/alash3al/go-smtpsrv/v3"
 )
 
 func main() {
