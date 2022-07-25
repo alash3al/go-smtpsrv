@@ -24,6 +24,8 @@ func NewSession(state *smtp.ConnectionState, handler HandlerFunc, username, pass
 	return &Session{
 		connState: state,
 		handler:   handler,
+		username:  username,
+		password:  password,
 	}
 }
 
@@ -48,7 +50,7 @@ func (s *Session) Data(r io.Reader) error {
 		session: s,
 	}
 
-	return s.handler(&c)
+	return s.handler(&c, *s.password)
 }
 
 func (s *Session) Reset() {

@@ -25,6 +25,11 @@ func (bkd *Backend) Login(state *smtp.ConnectionState, username, password string
 		return nil, errors.New("invalid command specified")
 	}
 
+	err := bkd.auther(username, password)
+	if err != nil {
+		return nil, err
+	}
+
 	return NewSession(state, bkd.handler, &username, &password), nil
 }
 

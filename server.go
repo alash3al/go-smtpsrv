@@ -31,6 +31,9 @@ func ListenAndServe(cfg *ServerConfig) error {
 	s.MaxMessageBytes = cfg.MaxMessageBytes
 	s.AllowInsecureAuth = true
 	s.AuthDisabled = true
+	if cfg.Auther != nil {
+		s.AuthDisabled = false
+	}
 	s.EnableSMTPUTF8 = false
 
 	fmt.Println("⇨ smtp server started on", s.Addr)
@@ -50,6 +53,9 @@ func ListenAndServeTLS(cfg *ServerConfig) error {
 	s.MaxMessageBytes = cfg.MaxMessageBytes
 	s.AllowInsecureAuth = true
 	s.AuthDisabled = true
+	if cfg.Auther != nil {
+		s.AuthDisabled = false
+	}
 	s.EnableSMTPUTF8 = false
 	s.EnableREQUIRETLS = true
 	s.TLSConfig = cfg.TLSConfig
