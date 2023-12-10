@@ -33,8 +33,6 @@ func ListenAndServe(cfg *ServerConfig) error {
 	s.AuthDisabled = true
 	s.EnableSMTPUTF8 = false
 
-	fmt.Println("⇨ smtp server started on", s.Addr)
-
 	return s.ListenAndServe()
 }
 
@@ -53,8 +51,6 @@ func ListenAndServeTLS(cfg *ServerConfig) error {
 	s.EnableSMTPUTF8 = false
 	s.EnableREQUIRETLS = true
 	s.TLSConfig = cfg.TLSConfig
-
-	fmt.Println("⇨ smtp server started on", s.Addr)
 
 	return s.ListenAndServeTLS()
 }
